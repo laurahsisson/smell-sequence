@@ -1,11 +1,11 @@
 <script setup>
     import Button from 'primevue/button';
 import Chart from 'primevue/chart';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
 
-const molecules = [
-    {name:"costus valerolactone",  concentration: 0.02},
-    {name:"phenyl propyl acetate",  concentration: 0.15},
-    {name:"decanol", concentration: 0.003}]
+
+const props = defineProps(['sequence'])
 
 // Radar chart looks bad if the values are at or close to 0. We set the minimum to be this value.
 const MIN_VALUE = .3;
@@ -13,7 +13,6 @@ const chartData = {
     labels: ['Citrus', 'Warm', 'Sweet', 'Green', 'Fruity', 'Floral', 'Fresh', 'Spicy', 'Woody'],
     datasets: [
         {
-            label: 'My Second dataset',
             data: [0, 1, .25, .6, 0, 0, 0, .6, 1]
         }
     ]
@@ -44,6 +43,7 @@ const chartOptions = {
         },
     }
 }
+
 function setMinimums(chartData) {
     // console.log(chartData)
     const newData = JSON.parse(JSON.stringify(chartData));
@@ -53,12 +53,16 @@ function setMinimums(chartData) {
     // console.log(newData)
     return newData
 }
+
 </script>
 <template>
     <Chart type="radar" :data="setMinimums(chartData)" :options="chartOptions" />
-    <ul class="list-none p-0">
-        <li v-for="box in molecules">
-            {{box.name}} ({{box.concentration}}%)
-        </li>
-    </ul>
+    <DataTable :value="sequence" stripedRows scrollable scrollHeight="200px" :showHeaders="false">
+        <Column field="name" header="Name"></Column>
+        <Column field="concentration" header="Concentration">
+            <template #body="slotProps">
+                {{slotProps.data.concentration}}%
+            </template>
+        </Column>
+    </DataTable>
 </template>

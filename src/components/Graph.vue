@@ -4,6 +4,7 @@ import * as d3 from "d3";
 
 // Have to use this annoying structure because d3 is an es module.
 export default {
+    emits: ['result-appended'], 
     data() {
         return {
             graphSize: 400,
@@ -12,7 +13,7 @@ export default {
     },
     methods: {
         handleClick(res) {
-            console.log("Clicked:", res);
+            this.$emit('result-appended', res);
         },
         handleMouseover(i) {
             document.getElementById('tooltip'+i).style.visibility = 'visible';
