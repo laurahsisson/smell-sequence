@@ -26,8 +26,8 @@ function appendResult(res) {
 
 </script>
 <template>
-    <div class="surface-ground" style="height: 100vh">
-        <div class="p-4 mx-auto" style="max-width: 60vw;">
+    <div class="surface-ground" style="height: 100%">
+        <div class="p-4 mx-auto" style="max-width: 90em;">
             <div class="grid justify-content-center py-2">
                 <div class="col-auto mx-2">
                     <div class="shadow-2 p-3 surface-card" style="border-radius: 6px">

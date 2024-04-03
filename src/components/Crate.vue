@@ -59,7 +59,7 @@ const products = [{
 ]
 </script>
 <template>
-    <DataTable :value="products" showGridlines stripedRows scrollable scrollHeight="600px">
+    <DataTable :value="products" showGridlines stripedRows scrollable scrollHeight="400px">
         <Column field="name" header="Name"></Column>
         <Column field="cas" header="CAS"></Column>
         <Column field="concentration" header="Concentration">

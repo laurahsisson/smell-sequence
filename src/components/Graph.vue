@@ -8,7 +8,8 @@ export default {
     data() {
         return {
             graphSize: 400,
-            radiusFactor: 20
+            radiusFactor: 20,
+            graphPadding: 50,
         };
     },
     methods: {
@@ -29,12 +30,12 @@ export default {
 };
 </script>
 <template>
-    <svg :width="graphSize" :height="graphSize">
+    <svg :width="graphSize+2*graphPadding" :height="graphSize+2*graphPadding">
         <g v-for="(res,i) in results">
-            <circle :cx="res.x*graphSize" :cy="res.y*graphSize" :r="res.probability*radiusFactor" @click="handleClick(res)" @mouseover="handleMouseover(i)" @mouseout="handleMouseout(i)">
+            <circle :cx="res.x*graphSize + graphPadding" :cy="res.y*graphSize + graphPadding" :r="res.probability*radiusFactor" @click="handleClick(res)" @mouseover="handleMouseover(i)" @mouseout="handleMouseout(i)">
             </circle>
-            <text :x="res.x*graphSize" :y="res.y * graphSize - res.probability * radiusFactor - 10" text-anchor="middle">{{res.name}}</text>
-            <text :id="'tooltip'+i" :x="res.x*graphSize" :y="res.y * graphSize - res.probability * radiusFactor - 30" :visibility="'hidden'" text-anchor="middle">{{res.SMILES}}</text>
+            <text :x="res.x*graphSize + graphPadding" :y="res.y * graphSize + graphPadding - res.probability * radiusFactor - 10" text-anchor="middle">{{res.name}}</text>
+            <text :id="'tooltip'+i" :x="res.x*graphSize + graphPadding" :y="res.y * graphSize + graphPadding - res.probability * radiusFactor - 30" :visibility="'hidden'" text-anchor="middle">{{res.SMILES}}</text>
         </g>
     </svg>
 </template>
