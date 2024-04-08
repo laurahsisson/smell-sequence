@@ -34,10 +34,6 @@ class Model(torch.nn.Module):
       hidden = hidden[0].transpose(0,1), hidden[1].transpose(0,1)
     return structure, concentration.squeeze(-1), hidden
 
-# model = Model(hidden_size=128,num_layers=1,dropout=0)
-# ex_structure, ex_concentration, ex_hidden = model(train_loader[0])
-# print(ex_structure.shape, ex_concentration.shape, ex_hidden[0].shape, ex_hidden[1].shape)
-
 def make_models(config):
   model = Model(hidden_size=2**config["hidden_dim"],num_layers=config["num_layers"],dropout=config["dropout"])
   return {
