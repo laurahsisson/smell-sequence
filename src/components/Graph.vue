@@ -4,7 +4,7 @@ import * as d3 from "d3";
 
 // Have to use this annoying structure because d3 is an es module.
 export default {
-    emits: ['result-appended'], 
+    emits: ['result-appended','temp-appended','delete-last'], 
     data() {
         return {
             graphSize: 400,
@@ -14,13 +14,13 @@ export default {
     },
     methods: {
         handleClick(res) {
-            this.$emit('result-appended', {name:res.names[0],CAS:res.CAS,concentration:res.concentration, SMILES:res.SMILES});
+            this.$emit('result-appended', res);
         },
-        handleMouseover(i) {
-            document.getElementById('tooltip'+i).style.visibility = 'visible';
+        handleMouseover(res) {
+            this.$emit('temp-appended', res);
         },
-        handleMouseout(i) {
-            document.getElementById('tooltip'+i).style.visibility = 'hidden';
+        handleMouseout(res) {
+            this.$emit('delete-last');
         },
     },
     props: ['results'],
@@ -31,11 +31,10 @@ export default {
 </script>
 <template>
     <svg :width="graphSize+2*graphPadding" :height="graphSize+2*graphPadding">
-        <g v-for="(res,i) in results">
-            <circle :cx="res.position.x*graphSize + graphPadding" :cy="res.position.y*graphSize + graphPadding" :r="res.probability*radiusFactor" @click="handleClick(res)" @mouseover="handleMouseover(i)" @mouseout="handleMouseout(i)">
+        <g v-for="res in results">
+            <circle :cx="res.position.x*graphSize + graphPadding" :cy="res.position.y*graphSize + graphPadding" :r="res.probability*radiusFactor" @click="handleClick(res)" @mouseover="handleMouseover(res)" @mouseout="handleMouseout(res)">
             </circle>
             <text :x="res.position.x*graphSize + graphPadding" :y="res.position.y * graphSize + graphPadding - res.probability * radiusFactor - 10" text-anchor="middle">{{res.names[0]}}</text>
-            <text :id="'tooltip'+i" :x="res.position.x*graphSize + graphPadding" :y="res.position.y * graphSize + graphPadding - res.probability * radiusFactor - 30" :visibility="'hidden'" text-anchor="middle">{{res.SMILES}}</text>
         </g>
     </svg>
 </template>

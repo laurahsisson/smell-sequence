@@ -18,19 +18,27 @@ const sequence = ref([
 ])
 
 function appendResult(res) {
-    sequence.value.unshift({ name: res.name, concentration: res.concentration, SMILES: res.SMILES });
+    console.log("BECAUSE WE ARE UNSHIFTING (adding to the front), our sequence model is innacurate.")
+    sequence.value.unshift(res);
     getResults(3);
 }
 
+function tempAppend(res) {
+    sequence.value.unshift(res);
+}
+
+function deleteLast() {
+    sequence.value.pop();
+}
+
+
 function getResults(k) {
     const sequence_str = JSON.stringify(sequence.value);
-    console.log("http://127.0.0.1:5000/recommendation/?sequence=" + encodeURIComponent(sequence_str) + "&k=" + k)
     fetch("http://127.0.0.1:5000/recommendation/?sequence=" + encodeURIComponent(sequence_str) + "&k=" + k)
         .then(response => response.json())
         .then(response_data => {
             // Process the JSON response data
             data.value = response_data;
-            console.log(data.value)
         })
         .catch(error => {
             // Handle any errors that occur during the fetch
@@ -52,7 +60,7 @@ getResults(3);
                 </div>
                 <div class="col-auto mx-2">
                     <div class="shadow-2 p-3 surface-card" style="border-radius: 6px">
-                        <Graph :results="data" @result-appended="appendResult" />
+                        <Graph :results="data" @result-appended="appendResult" @temp-appended="tempAppend" @delete-last="deleteLast" />
                     </div>
                 </div>
                 <div class="col-auto mx-2">

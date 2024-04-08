@@ -7,16 +7,10 @@ import Column from 'primevue/column';
 
 const props = defineProps(['sequence'])
 
+const all_labels = ['Citrus', 'Warm', 'Sweet', 'Green', 'Fruity', 'Floral', 'Fresh', 'Spicy', 'Woody'];
+
 // Radar chart looks bad if the values are at or close to 0. We set the minimum to be this value.
 const MIN_VALUE = .3;
-const chartData = {
-    labels: ['Citrus', 'Warm', 'Sweet', 'Green', 'Fruity', 'Floral', 'Fresh', 'Spicy', 'Woody'],
-    datasets: [
-        {
-            data: [0, 1, .25, .6, 0, 0, 0, .6, 1]
-        }
-    ]
-}
 
 const chartOptions = {
     scales: {
@@ -44,21 +38,37 @@ const chartOptions = {
     }
 }
 
+function makeChartData() {
+    const sequence_notes = props.sequence.map(result => 
+        ({data: all_labels.map(note => result.notes[note])})
+    );
+    return {
+        labels: all_labels,
+        datasets: sequence_notes,
+    }
+}
+
 function setMinimums(chartData) {
-    // console.log(chartData)
+    if (!chartData.datasets){
+        return chartData;
+    }
+
     const newData = JSON.parse(JSON.stringify(chartData));
     newData.datasets.forEach(dataset => {
         dataset.data = dataset.data.map(value => Math.max(value, MIN_VALUE));
     });
+    newData.datasets.splice(1, newData.datasets.length);
     // console.log(newData)
     return newData
 }
 
 </script>
 <template>
-    <Chart type="radar" :data="setMinimums(chartData)" :options="chartOptions" />
+    <Chart type="radar" :data="setMinimums(makeChartData())" :options="chartOptions" />
     <DataTable :value="sequence" stripedRows scrollable scrollHeight="200px" :showHeaders="false">
-        <Column field="name" header="Name" class="overflow-hidden text-overflow-ellipsis"></Column>
+        <Column field="name" header="Name" class="overflow-hidden text-overflow-ellipsis"><template #body="slotProps">
+                {{slotProps.data.names[0]}}%
+            </template></Column>
         <Column field="concentration" header="Concentration">
             <template #body="slotProps">
                 {{slotProps.data.concentration}}%
