@@ -21,6 +21,9 @@ const chartOptions = {
             },
         },
     },
+    animation: {
+        duration: 0,
+    },
     elements: {
         line: {
             // This should be very small. Past like .5 it breaks
