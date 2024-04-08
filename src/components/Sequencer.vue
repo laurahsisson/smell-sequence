@@ -58,7 +58,7 @@ function setMinimums(chartData) {
 <template>
     <Chart type="radar" :data="setMinimums(chartData)" :options="chartOptions" />
     <DataTable :value="sequence" stripedRows scrollable scrollHeight="200px" :showHeaders="false">
-        <Column field="name" header="Name"></Column>
+        <Column field="name" header="Name" class="overflow-hidden text-overflow-ellipsis"></Column>
         <Column field="concentration" header="Concentration">
             <template #body="slotProps">
                 {{slotProps.data.concentration}}%

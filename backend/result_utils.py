@@ -7,20 +7,22 @@ Notes = collections.namedtuple("Notes"," ".join(NOTES_WHEEL))
 
 
 class RecResult:
-    def __init__(self,names,cas,smiles,concentration,position,notes):
+    def __init__(self,names,cas,smiles,concentration,probability,position,notes):
         self.names = names
         self.cas = cas
         self.smiles = smiles
         self.concentration = concentration
+        self.probability = probability
         self.position = position
         self.notes = notes
 
     def to_dict(self):
         return {
-            'names': self.names,
-            'cas': self.cas,
-            'smiles': self.smiles,
+            'names': sorted(self.names,key=lambda x: len(x)),
+            'CAS': self.cas,
+            'SMILES': self.smiles,
             'concentration': self.concentration,
+            'probability': self.probability,
             'position': self.position._asdict(),
             'notes': self.notes._asdict()
         }

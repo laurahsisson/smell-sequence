@@ -1,21 +1,19 @@
-from flask import Flask
+import json
+from flask import Flask, request
+from flask_cors import CORS
 import recommendation
 
 app = Flask(__name__)
-
-@app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
-
-
-from markupsafe import escape
-
-@app.route("/<name>")
-def hello(name):
-    return f"Hello, {escape(name)}!"
-
+CORS(app)
 
 @app.route("/recommendation/")
 def rec():
-    return recommendation.get([],3)
+    sequence_str = request.args.get('sequence', '[]')
+    sequence = json.loads(sequence_str) if sequence_str else []
 
+    k = int(request.args.get('k', '3'))
+
+    return recommendation.get(sequence, k)
+
+if __name__ == '__main__':
+    app.run()

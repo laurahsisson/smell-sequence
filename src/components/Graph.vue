@@ -14,7 +14,7 @@ export default {
     },
     methods: {
         handleClick(res) {
-            this.$emit('result-appended', res);
+            this.$emit('result-appended', {name:res.names[0],CAS:res.CAS,concentration:res.concentration});
         },
         handleMouseover(i) {
             document.getElementById('tooltip'+i).style.visibility = 'visible';
@@ -32,10 +32,10 @@ export default {
 <template>
     <svg :width="graphSize+2*graphPadding" :height="graphSize+2*graphPadding">
         <g v-for="(res,i) in results">
-            <circle :cx="res.x*graphSize + graphPadding" :cy="res.y*graphSize + graphPadding" :r="res.probability*radiusFactor" @click="handleClick(res)" @mouseover="handleMouseover(i)" @mouseout="handleMouseout(i)">
+            <circle :cx="res.position.x*graphSize + graphPadding" :cy="res.position.y*graphSize + graphPadding" :r="res.probability*radiusFactor" @click="handleClick(res)" @mouseover="handleMouseover(i)" @mouseout="handleMouseout(i)">
             </circle>
-            <text :x="res.x*graphSize + graphPadding" :y="res.y * graphSize + graphPadding - res.probability * radiusFactor - 10" text-anchor="middle">{{res.name}}</text>
-            <text :id="'tooltip'+i" :x="res.x*graphSize + graphPadding" :y="res.y * graphSize + graphPadding - res.probability * radiusFactor - 30" :visibility="'hidden'" text-anchor="middle">{{res.SMILES}}</text>
+            <text :x="res.position.x*graphSize + graphPadding" :y="res.position.y * graphSize + graphPadding - res.probability * radiusFactor - 10" text-anchor="middle">{{res.names[0]}}</text>
+            <text :id="'tooltip'+i" :x="res.position.x*graphSize + graphPadding" :y="res.position.y * graphSize + graphPadding - res.probability * radiusFactor - 30" :visibility="'hidden'" text-anchor="middle">{{res.SMILES}}</text>
         </g>
     </svg>
 </template>
