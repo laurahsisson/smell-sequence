@@ -1,3 +1,4 @@
+# flask --app main.py --debug run
 import json
 from flask import Flask, request
 from flask_cors import CORS
@@ -13,7 +14,7 @@ def rec():
 
     k = int(request.args.get('k', '3'))
 
-    return recommendation.get(sequence, k)
+    return recommendation.get(k=k, aroma_sequence=sequence)
 
 if __name__ == '__main__':
     app.run()

@@ -14,7 +14,7 @@ export default {
     },
     methods: {
         handleClick(res) {
-            this.$emit('result-appended', {name:res.names[0],CAS:res.CAS,concentration:res.concentration});
+            this.$emit('result-appended', {name:res.names[0],CAS:res.CAS,concentration:res.concentration, SMILES:res.SMILES});
         },
         handleMouseover(i) {
             document.getElementById('tooltip'+i).style.visibility = 'visible';

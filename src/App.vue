@@ -18,7 +18,7 @@ const sequence = ref([
 ])
 
 function appendResult(res) {
-    sequence.value.unshift({ name: res.name, concentration: res.concentration });
+    sequence.value.unshift({ name: res.name, concentration: res.concentration, SMILES: res.SMILES });
     getResults(3);
 }
 
@@ -30,7 +30,7 @@ function getResults(k) {
         .then(response_data => {
             // Process the JSON response data
             data.value = response_data;
-            console.log(response_data);
+            console.log(data.value)
         })
         .catch(error => {
             // Handle any errors that occur during the fetch

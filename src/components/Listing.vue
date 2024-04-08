@@ -1,6 +1,5 @@
 <script setup>
 const props = defineProps(['results'])
-console.log(props.results)
 </script>
 <template>
     <div class="text-center text-2xl">
