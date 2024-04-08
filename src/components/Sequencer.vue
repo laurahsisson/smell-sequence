@@ -5,7 +5,7 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 
 
-const props = defineProps(['sequence'])
+const props = defineProps(['sequence','tempResult'])
 
 const all_labels = ['Citrus', 'Warm', 'Sweet', 'Green', 'Fruity', 'Floral', 'Fresh', 'Spicy', 'Woody'];
 
@@ -42,6 +42,10 @@ function makeChartData() {
     const sequence_notes = props.sequence.map(result => 
         ({data: all_labels.map(note => result.notes[note])})
     );
+    if (props.tempResult.notes) {
+        sequence_notes.unshift({data: all_labels.map(note => props.tempResult.notes[note])})
+    }
+
     return {
         labels: all_labels,
         datasets: sequence_notes,

@@ -17,6 +17,8 @@ const data = ref([])
 const sequence = ref([
 ])
 
+const tempResult = ref({})
+
 function appendResult(res) {
     console.log("BECAUSE WE ARE UNSHIFTING (adding to the front), our sequence model is innacurate.")
     sequence.value.unshift(res);
@@ -24,11 +26,11 @@ function appendResult(res) {
 }
 
 function tempAppend(res) {
-    sequence.value.unshift(res);
+    tempResult.value = res;
 }
 
 function deleteLast() {
-    sequence.value.pop();
+    tempResult.value = {};
 }
 
 
@@ -55,7 +57,7 @@ getResults(3);
             <div class="grid justify-content-center py-2">
                 <div class="col-auto mx-2">
                     <div class="shadow-2 p-3 surface-card" style="border-radius: 6px">
-                        <Sequencer :sequence="sequence" />
+                        <Sequencer :sequence="sequence" :tempResult="tempResult" />
                     </div>
                 </div>
                 <div class="col-auto mx-2">
