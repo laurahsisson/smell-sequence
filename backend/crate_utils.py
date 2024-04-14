@@ -1,18 +1,20 @@
 import json
 import os
 
+import dataset
+
 def get(crate_fname):
     with open(os.path.join("crates",f"{crate_fname}.json")) as f:
-        data = json.load(f)
+        crate = json.load(f)
 
-    data["name"] = crate_fname
-    return data
+    crate["data"] = [mol for mol in crate["data"] if dataset.has_data(mol["SMILES"])]
+    crate["name"] = crate_fname
+    return crate
 
 def smiles(crate_fname):
     return [mol["SMILES"] for mol in get(crate_fname)["data"]]
 
 def get_aroma(crate_fname,smiles):
-    data = get(crate_fname)
     for mol in get(crate_fname)["data"]:
         if mol["SMILES"] != smiles:
             continue

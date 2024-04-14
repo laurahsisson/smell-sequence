@@ -56,15 +56,11 @@ def get_crates_smiles(crate_fnames):
 
   crates_smiles = set()
   for crate_fname in crate_fnames:
-    for smiles in crate_utils.smiles(crate_fname):
-      if not dataset.has_data(smiles):
-        continue
-      
-      crates_smiles.add((crate_fname,smiles))
+    crates_smiles.update([(crate_fname,smiles) for smiles in crate_utils.smiles(crate_fname)])
   
   if not crates_smiles:
     raise RuntimeError(f"Failed to find any molecules with metadata in {crate_fname}")
-    
+
   return crates_smiles
 
 def get_top_k(k,aroma_sequence,crate_fnames):
