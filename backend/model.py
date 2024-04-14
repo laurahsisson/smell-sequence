@@ -68,6 +68,6 @@ def get_top_k(k,aroma_sequence,smiles_crate=[]):
 
   results = []
   for smiles, p in probs.most_common(k):
-    results.append({"SMILES":smiles,"probability":p,"concentration":dataset.get_concentration(smiles)*concentration.numpy().item()})
+    results.append({"SMILES":smiles,"probability":p,"concentration":dataset.get_concentration(smiles)})
   
-  return results
+  return results, concentration.numpy().item()

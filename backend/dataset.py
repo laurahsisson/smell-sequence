@@ -14,17 +14,22 @@ with open("datasets/molecules.json") as f:
 with open("datasets/dataset.json") as f:
   dataset = json.load(f)
 
+trace_amount = 1e-2
+
 smiles_to_all_concentrations = collections.defaultdict(list)
-for d in dataset:
+for d in tqdm.tqdm(dataset):
   for aroma in d["ingredients"]:
     try:
       if not aroma["SMILES"]:
         raise RuntimeError("Invalid SMILES")
+      if aroma["concentration"] < trace_amount:
+        continue
       smiles_to_all_concentrations[aroma["SMILES"]].append(aroma["concentration"])
+
     except Exception as e:
       continue
 
-smiles_to_concentration = {k:np.mean(v).item() for k,v in smiles_to_all_concentrations.items()}
+smiles_to_concentration = {k:np.min(v) for k,v in smiles_to_all_concentrations.items()}
 
 all_smiles = {m["SMILES"] for m in molecules}.intersection(smiles_to_all_concentrations.keys())
 
