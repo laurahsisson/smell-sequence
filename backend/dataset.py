@@ -10,63 +10,36 @@ with open("datasets/molecules.json") as f:
     molecules = json.load(f)
     molecules = [m for m in molecules if m["SMILES"] and m["CAS"]]
 
-# Load dataset and metadata
-with open("datasets/dataset.json") as f:
-  dataset = json.load(f)
+# Load metadata
+with open("datasets/smiles_to_metadata.json") as f:
+  metadata = json.load(f)
 
-trace_amount = 1e-2
+all_smiles = {m["SMILES"] for m in molecules}.intersection(metadata.keys())
 
-smiles_to_all_concentrations = collections.defaultdict(list)
-for d in tqdm.tqdm(dataset):
-  for aroma in d["ingredients"]:
-    try:
-      if not aroma["SMILES"]:
-        raise RuntimeError("Invalid SMILES")
-      if aroma["concentration"] < trace_amount:
-        continue
-      smiles_to_all_concentrations[aroma["SMILES"]].append(aroma["concentration"])
+metadata = {s:metadata[s] for s in all_smiles}
+aromas = {m["SMILES"]: m for m in molecules if m["SMILES"] in all_smiles}
 
-    except Exception as e:
-      continue
-
-smiles_to_concentration = {k:np.min(v) for k,v in smiles_to_all_concentrations.items()}
-
-all_smiles = {m["SMILES"] for m in molecules}.intersection(smiles_to_all_concentrations.keys())
-
-smiles_to_all_concentrations = {s:smiles_to_all_concentrations[s] for s in all_smiles}
-smiles_to_aroma = {m["SMILES"]: m for m in molecules if m["SMILES"] in all_smiles}
-
-# Load embedding information
-with open("datasets/smiles_to_embed.json") as f:
-  smiles_embed = json.load(f)
-  smiles_embed = {s:smiles_embed[s] for s in all_smiles}
-
-for k, v in smiles_embed.items():
-  smiles_embed[k] = np.array(v)
+for k, v in metadata.items():
+  metadata[k]["embedding"] = np.array(metadata[k]["embedding"])
 
 def get_fpsize():
-    return len(next(iter(smiles_embed.values())))
+  return len(next(iter(metadata.values()))["embedding"])
 
 def get_embed(smiles):
-    return smiles_embed[smiles]
+    return metadata[smiles]["embedding"]
 
 def entire_smiles_crate():
-  for smiles in smiles_embed.keys():
+  for smiles in metadata.keys():
     yield smiles
 
-# Load prediction information
-with open("datasets/smiles_to_predictions.json") as f:
-  smiles_predictions = json.load(f)
-  smiles_predictions = {s:smiles_predictions[s] for s in all_smiles}
-
 def get_predictions(smiles):
-    return smiles_predictions[smiles]
+    return metadata[smiles]["predictions"]
 
 def get_concentration(smiles):
-    return smiles_to_concentration[smiles]
+    return metadata[smiles]["concentration"]
 
 def has_data(smiles):
-    return smiles in smiles_to_concentration
+    return smiles in metadata
 
 def get_aroma(smiles):
-    return smiles_to_aroma[smiles]
+    return aromas[smiles]
