@@ -4,7 +4,7 @@ import * as d3 from "d3";
 
 // Have to use this annoying structure because d3 is an es module.
 export default {
-    emits: ['result-appended','temp-appended','delete-last'], 
+    emits: ['result-appended','set-temp-value'], 
     data() {
         return {
             graphSize: 400,
@@ -17,10 +17,10 @@ export default {
             this.$emit('result-appended', res);
         },
         handleMouseover(res) {
-            this.$emit('temp-appended', res);
+            this.$emit('set-temp-value', res);
         },
         handleMouseout(res) {
-            this.$emit('delete-last');
+            this.$emit('set-temp-value', {});
         },
     },
     props: ['results'],
@@ -29,6 +29,7 @@ export default {
     },
 };
 </script>
+<!-- TODO, some way to handle zooming? -->
 <template>
     <svg :width="graphSize+2*graphPadding" :height="graphSize+2*graphPadding">
         <g v-for="res in results">

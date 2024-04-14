@@ -1,11 +1,13 @@
 <script setup>
-    import Button from 'primevue/button';
+
+import Button from 'primevue/button';
 import Chart from 'primevue/chart';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 
 
-const props = defineProps(['sequence','tempResult'])
+const props = defineProps(['sequence','tempResult']);
+defineEmits(['delete-last']);
 
 const all_labels = ['Citrus', 'Warm', 'Sweet', 'Green', 'Fruity', 'Floral', 'Fresh', 'Spicy', 'Woody'];
 
@@ -46,7 +48,7 @@ function makeChartData() {
         ({data: all_labels.map(note => result.notes[note])})
     );
     if (props.tempResult.notes) {
-        sequence_notes.unshift({data: all_labels.map(note => props.tempResult.notes[note])})
+        sequence_notes.push({data: all_labels.map(note => props.tempResult.notes[note])})
     }
 
     return {
@@ -64,7 +66,7 @@ function setMinimums(chartData) {
     newData.datasets.forEach(dataset => {
         dataset.data = dataset.data.map(value => Math.max(value, MIN_VALUE));
     });
-    newData.datasets.splice(1, newData.datasets.length);
+    newData.datasets.splice(0, newData.datasets.length - 1);
     // console.log(newData)
     return newData
 }
@@ -72,13 +74,15 @@ function setMinimums(chartData) {
 </script>
 <template>
     <Chart type="radar" :data="setMinimums(makeChartData())" :options="chartOptions" />
-    <DataTable :value="sequence" stripedRows scrollable scrollHeight="200px" :showHeaders="false">
+    <!-- Reversing because we want to have the last elements in the sequence first. -->
+    <Button icon="pi pi-arrow-left" severity="secondary" :disabled="sequence.length == 0" @click="$emit('delete-last')"/>
+    <DataTable :value="sequence.toReversed()" stripedRows scrollable scrollHeight="200px" :showHeaders="false">
         <Column field="name" header="Name" class="overflow-hidden text-overflow-ellipsis"><template #body="slotProps">
-                {{slotProps.data.names[0]}}%
+                {{slotProps.data.names[0]}}
             </template></Column>
         <Column field="concentration" header="Concentration">
             <template #body="slotProps">
-                {{slotProps.data.concentration}}%
+                {{slotProps.data.concentration.toFixed(3)}}%
             </template>
         </Column>
     </DataTable>

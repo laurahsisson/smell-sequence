@@ -1,46 +1,47 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue'
 
 import Graph from '@/components/Graph.vue'
 import Sequencer from '@/components/Sequencer.vue'
 import Listing from '@/components/Listing.vue'
 import Crate from '@/components/Crate.vue'
 
-// const data = ref([
-//     { name: "para-cresyl acetate", SMILES: 'CC(=O)CCC1=CC=C(C=C1)OC', probability: 1, concentration: 0.0032, x: 0.45, y: 0.67 },
-//     { name: "ambroxan", SMILES: 'CC([C@@H]1CCC@(C)C=C)C(=O)CC=C(C)C', probability: .8, concentration: 0.0008, x: 0.15, y: 0.45 },
-//     { name: "cinnamyl alcohol", SMILES: 'CCCCCCCC(=O)OC1=CC=C(C=C1)C', probability: .4, concentration: 6.4900e-06, x: 0.88, y: 0.23 }
-// ])
+const data = ref([]);
 
-const data = ref([])
+const sequence = ref([])
 
-const sequence = ref([
-])
+const dosage = ref(0);
 
-const tempResult = ref({})
+const tempResult = ref({});
+
+const cratesSelected = ref({});
+const cratesList = ref([]);
+const cratesData = ref({});
 
 function appendResult(res) {
-    console.log("BECAUSE WE ARE UNSHIFTING (adding to the front), our sequence model is innacurate.")
-    sequence.value.unshift(res);
-    getResults(3);
-}
-
-function tempAppend(res) {
-    tempResult.value = res;
+    sequence.value.push(res);
 }
 
 function deleteLast() {
-    tempResult.value = {};
+    sequence.value.pop();
 }
 
+function setTempValue(res) {
+    tempResult.value = res;
+}
 
 function getResults(k) {
     const sequence_str = JSON.stringify(sequence.value);
-    fetch("http://127.0.0.1:5000/recommendation/?sequence=" + encodeURIComponent(sequence_str) + "&k=" + k)
+
+    const crates = Object.keys(cratesSelected.value).filter(key => cratesSelected.value[key]);
+    const crates_str = JSON.stringify(crates);
+
+    fetch("http://127.0.0.1:5000/recommendation/?sequence=" + encodeURIComponent(sequence_str) + "&k=" + k + "&crates=" + encodeURIComponent(crates_str))
         .then(response => response.json())
         .then(response_data => {
             // Process the JSON response data
-            data.value = response_data;
+            data.value = response_data.options;
+            dosage.value = response_data.dosage;
         })
         .catch(error => {
             // Handle any errors that occur during the fetch
@@ -48,7 +49,43 @@ function getResults(k) {
         });
 }
 
-getResults(3);
+function listCrates() {
+    fetch("http://127.0.0.1:5000/crates")
+        .then(response => response.json())
+        .then(response_data => {
+            cratesList.value = response_data;
+            response_data.forEach((crate) => cratesSelected.value[crate.name] = true);
+            getCrate(response_data[0].name)
+        })
+        .catch(error => {
+            // Handle any errors that occur during the fetch
+            console.error('Error:', error);
+        });
+}
+
+function getCrate(name) {
+    fetch("http://127.0.0.1:5000/crates/"+name)
+        .then(response => response.json())
+        .then(response_data => {
+            cratesData.value = response_data;
+        })
+        .catch(error => {
+            // Handle any errors that occur during the fetch
+            console.error('Error:', error);
+        });
+}
+
+listCrates();
+
+watch(cratesSelected, async () => {
+    getResults(5);
+}, { deep: true });
+
+watch(sequence, async () => {
+    getResults(5);
+}, { deep: true });
+
+
 
 </script>
 <template>
@@ -57,22 +94,22 @@ getResults(3);
             <div class="grid justify-content-center py-2">
                 <div class="col-auto mx-2">
                     <div class="shadow-2 p-3 surface-card" style="border-radius: 6px">
-                        <Sequencer :sequence="sequence" :tempResult="tempResult" />
+                        <Sequencer :sequence="sequence" :tempResult="tempResult" @delete-last="deleteLast" />
                     </div>
                 </div>
                 <div class="col-auto mx-2">
                     <div class="shadow-2 p-3 surface-card" style="border-radius: 6px">
-                        <Graph :results="data" @result-appended="appendResult" @temp-appended="tempAppend" @delete-last="deleteLast" />
+                        <Graph :results="data" @result-appended="appendResult" @set-temp-value="setTempValue"  />
                     </div>
                 </div>
                 <div class="col-auto mx-2">
                     <div class="shadow-2 p-3 surface-card" style="border-radius: 6px">
-                        <Listing :results="data" />
+                        <Listing :results="data" :dosage="dosage" />
                     </div>
                 </div>
             </div>
             <div class="shadow-2 p-3 surface-card mx-auto" style="border-radius: 6px; max-width: 100em;">
-                <Crate />
+                <Crate :cratesList="cratesList" :cratesSelected="cratesSelected" :cratesData="cratesData" :getCrate="getCrate" />
             </div>
         </div>
     </div>
