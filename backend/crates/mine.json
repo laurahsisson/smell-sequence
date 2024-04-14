@@ -4,242 +4,242 @@
     {
       "name": "Ambrettolide",
       "SMILES": "C1CCCCOC(=O)CCCCCC=CCCC1",
-      "CAS": ""
+      "CAS": "28645-51-4"
     },
     {
       "name": "Ambroxan",
       "SMILES": "CC1(CCCC2(C1CCC3(C2CCO3)C)C)C",
-      "CAS": ""
+      "CAS": "6790-58-5"
     },
     {
       "name": "Auralva",
       "SMILES": "CC(CCCC(C)(C)O)CC=NC1=CC=CC=C1C(=O)OC",
-      "CAS": ""
+      "CAS": "89-43-0"
     },
     {
       "name": "Benzyl Acetate",
       "SMILES": "CC(=O)OCC1=CC=CC=C1",
-      "CAS": ""
+      "CAS": "140-11-4"
     },
     {
       "name": "Calone 1951",
       "SMILES": "CC1=CC2=C(C=C1)OCC(=O)CO2",
-      "CAS": ""
+      "CAS": "28940-11-6"
     },
     {
       "name": "Citral",
       "SMILES": "CC(=CCCC(=CC=O)C)C",
-      "CAS": ""
+      "CAS": "5392-40-5"
     },
     {
       "name": "Citronellol",
       "SMILES": "CC(CCC=C(C)C)CCO",
-      "CAS": ""
+      "CAS": "106-22-9"
     },
     {
       "name": "Cyclamen Aldehyde",
       "SMILES": "CC(C)C1=CC=C(C=C1)CC(C)C=O",
-      "CAS": ""
+      "CAS": "103-95-7"
     },
     {
       "name": "Dihydro Eugenol",
       "SMILES": "CCCC1=CC(=C(C=C1)O)OC",
-      "CAS": ""
+      "CAS": "2785-87-7"
     },
     {
       "name": "Dihydro Myrcenol",
       "SMILES": "CCC(=C)CCCC(C)(C)O",
-      "CAS": ""
+      "CAS": "18479-58-8"
     },
     {
       "name": "Dimethyl Benzyl Carbinyl Acetate",
       "SMILES": "CC(=O)OC(C)(C)CC1=CC=CC=C1",
-      "CAS": ""
+      "CAS": "151-05-3"
     },
     {
       "name": "Dimethyl Octenone",
       "SMILES": "CCCCC(=C(C)C(=O)C)C",
-      "CAS": ""
+      "CAS": "2550-11-0"
     },
     {
       "name": "Ebanol",
       "SMILES": "CC1=CCC(C1(C)C)C=CC(C)C(C)O",
-      "CAS": ""
+      "CAS": "67801-20-1"
     },
     {
       "name": "Ethyl Linalool",
       "SMILES": "CCC(=CCCC(C)(C=C)O)C",
-      "CAS": ""
+      "CAS": "10339-55-6"
     },
     {
       "name": "Ethyl Maltol",
       "SMILES": "CCC1=C(C(=O)C=CO1)O",
-      "CAS": ""
+      "CAS": "4940-11-8"
     },
     {
       "name": "Ethyl Vanillin",
       "SMILES": "CCOC1=C(C=CC(=C1)C=O)O",
-      "CAS": ""
+      "CAS": "121-32-4"
     },
     {
       "name": "Ethylene Brassylate",
       "SMILES": "C1CCCCCC(=O)OCCOC(=O)CCCCC1",
-      "CAS": ""
+      "CAS": "105-95-3"
     },
     {
       "name": "Exaltolide",
       "SMILES": "C1CCCCCCCOC(=O)CCCCCC1",
-      "CAS": ""
+      "CAS": "106-02-5"
     },
     {
       "name": "Florhydral",
       "SMILES": "CC(C)C1=CC(=CC=C1)C(C)CC=O",
-      "CAS": ""
+      "CAS": "125109-85-5"
     },
     {
       "name": "Galaxolide",
       "SMILES": "CC1COCC2=CC3=C(C=C12)C(C(C3(C)C)C)(C)C",
-      "CAS": ""
+      "CAS": "1222-05-5"
     },
     {
       "name": "Geraniol",
       "SMILES": "CC(=CCCC(=CCO)C)C",
-      "CAS": ""
+      "CAS": "106-24-1"
     },
     {
       "name": "Geranyl Acetate",
       "SMILES": "CC(=CCCC(=CCOC(=O)C)C)C",
-      "CAS": ""
+      "CAS": "105-87-3"
     },
     {
       "name": "Habanolide",
       "SMILES": "C1CCCCCCOC(=O)C=CCCCCC1",
-      "CAS": ""
+      "CAS": "0111879-80-2"
     },
     {
       "name": "Hedione",
       "SMILES": "CCCCCC1C(CCC1=O)CC(=O)OC",
-      "CAS": ""
+      "CAS": "24851-98-7"
     },
     {
       "name": "Helional",
       "SMILES": "CC(CC1=CC2=C(C=C1)OCO2)C=O",
-      "CAS": ""
+      "CAS": "1205-17-0"
     },
     {
-      "name": "Hexenol-3-CIS",
+      "name": "Hexenol-3-Cis",
       "SMILES": "CCC=CCCO",
-      "CAS": ""
+      "CAS": "928-96-1"
     },
     {
-      "name": "Hexenyl-3-CIS Acetate",
+      "name": "Hexenyl Cis-3 Acetate",
       "SMILES": "CCC=CCCOC(=O)C",
-      "CAS": ""
+      "CAS": "3681-71-8"
     },
     {
       "name": "Hexyl Salicylate",
       "SMILES": "CCCCCCOC(=O)C1=CC=CC=C1O",
-      "CAS": ""
+      "CAS": "6259-76-3"
     },
     {
       "name": "Indolene 50",
       "SMILES": "CC(CCCC(C)(C)O)CC(N1C=CC2=CC=CC=C21)N3C=CC4=CC=CC=C43",
-      "CAS": ""
+      "CAS": "68908-82-7"
     },
     {
       "name": "Iso E Super",
       "SMILES": "CC1CC2=C(CC1(C)C(=O)C)C(CCC2)(C)C",
-      "CAS": ""
+      "CAS": "54464-57-2"
     },
     {
       "name": "Linalool",
       "SMILES": "CC(=CCCC(C)(C=C)O)C",
-      "CAS": ""
+      "CAS": "78-70-6"
     },
     {
       "name": "Linalyl Acetate",
       "SMILES": "CC(=CCCC(C)(C=C)OC(=O)C)C",
-      "CAS": ""
+      "CAS": "115-95-7"
     },
     {
       "name": "Methyl Benzoate",
       "SMILES": "COC(=O)C1=CC=CC=C1",
-      "CAS": ""
+      "CAS": "93-58-3"
     },
     {
       "name": "Methyl Diantilis",
       "SMILES": "CCOC1=C(C=CC(=C1)COC)O",
-      "CAS": ""
+      "CAS": "5595-79-9"
     },
     {
       "name": "Methyl Laitone",
       "SMILES": "CC1CCC2(CC1)CCC(=O)O2",
-      "CAS": ""
+      "CAS": "94201-19-1"
     },
     {
-      "name": "Para Cresyl Acetate",
+      "name": "Para-cresyl Acetate",
       "SMILES": "CC1=CC=C(C=C1)OC(=O)C",
-      "CAS": ""
+      "CAS": "140-39-6"
     },
     {
       "name": "Peonile",
       "SMILES": "C1CCC(=C(C#N)C2=CC=CC=C2)CC1",
-      "CAS": ""
+      "CAS": "10461-98-0"
     },
     {
       "name": "Phenethyl Acetate",
       "SMILES": "CC(=O)OCCC1=CC=CC=C1",
-      "CAS": ""
+      "CAS": "103-45-7"
     },
     {
-      "name": "Phenethyl Alcohol",
+      "name": "Phenyl Ethyl Alcohol",
       "SMILES": "C1=CC=C(C=C1)CCO",
-      "CAS": ""
+      "CAS": "60-12-8"
     },
     {
-      "name": "Phenyl Ethyl Phenyl Acetate Replacer 40% in Benzyl Benzoate",
+      "name": "Phenyl Ethyl Phenyl Acetate",
       "SMILES": "C1=CC=C(C=C1)CCOC(=O)CC2=CC=CC=C2",
-      "CAS": ""
+      "CAS": "102-20-5"
     },
     {
       "name": "Rose Oxide",
       "SMILES": "CC1CCOC(C1)C=C(C)C",
-      "CAS": ""
+      "CAS": "16409-43-1"
     },
     {
       "name": "Stemone",
       "SMILES": "CCC(C)CC(=NO)CC",
-      "CAS": ""
+      "CAS": "22457-23-4"
     },
     {
       "name": "Styrallyl Acetate",
       "SMILES": "CC(C1=CC=CC=C1)OC(=O)C",
-      "CAS": ""
+      "CAS": "93-92-5"
     },
     {
       "name": "Tetrahydro Linalool",
       "SMILES": "CCC(C)(CCCC(C)C)O",
-      "CAS": ""
+      "CAS": "78-69-3"
     },
     {
       "name": "Toscanol",
       "SMILES": "COC1=CC=C(C=C1)CC2CC2",
-      "CAS": ""
+      "CAS": "16510-27-3"
     },
     {
       "name": "Undecavertol",
       "SMILES": "CCCCCC(C(=CCC)C)O",
-      "CAS": ""
+      "CAS": "81782-77-6"
     },
     {
       "name": "Vanillin",
       "SMILES": "COC1=C(C=CC(=C1)C=O)O",
-      "CAS": ""
+      "CAS": "121-33-5"
     },
     {
       "name": "Velvione",
       "SMILES": "C1CCCCCC(=O)CCCC=CCCCC1",
-      "CAS": ""
+      "CAS": "37609-25-9"
     }
   ]
 }

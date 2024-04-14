@@ -33,7 +33,7 @@ def entire_smiles_crate():
     yield smiles
 
 def get_predictions(smiles):
-    return metadata[smiles]["predictions"]
+    return collections.Counter(metadata[smiles]["predictions"])
 
 def get_concentration(smiles):
     return metadata[smiles]["concentration"]

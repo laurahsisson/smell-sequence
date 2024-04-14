@@ -2,12 +2,20 @@ import json
 import os
 
 import dataset
+import collections
+
+NOTES_COUNT = 3
 
 def get(crate_fname):
     with open(os.path.join("crates",f"{crate_fname}.json")) as f:
         crate = json.load(f)
 
     crate["data"] = [mol for mol in crate["data"] if dataset.has_data(mol["SMILES"])]
+    for mol in crate["data"]:
+        predictions = dataset.get_predictions(mol["SMILES"])
+        notes, freqs = zip(*predictions.most_common(NOTES_COUNT))
+        mol["notes"] = list(notes)
+
     crate["name"] = crate_fname
     return crate
 
