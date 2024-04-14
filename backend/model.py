@@ -4,6 +4,9 @@ import torch
 import numpy as np
 
 import dataset
+import crate_utils
+
+
 
 start_token = np.ones(dataset.get_fpsize())
 end_token = -1*np.ones(dataset.get_fpsize())
@@ -47,7 +50,25 @@ model = make_models(config)["model"]
 state_dict = torch.load("models/model.pt")
 model.load_state_dict(state_dict)
 
-def get_top_k(k,aroma_sequence,smiles_crate=[]):
+def get_crates_smiles(crate_fnames):
+  if not crate_fnames:
+    return [("",smiles) for smiles in dataset.entire_smiles_crate()]
+
+  crates_smiles = set()
+  for crate_fname in crate_fnames:
+    for smiles in crate_utils.smiles(crate_fname):
+      if not dataset.has_data(smiles):
+        continue
+      
+      crates_smiles.add((crate_fname,smiles))
+  
+  if not crates_smiles:
+    raise RuntimeError(f"Failed to find any molecules with metadata in {crate_fname}")
+    
+  return crates_smiles
+
+def get_top_k(k,aroma_sequence,crate_fnames):
+
   prior_embed = np.array([start_token] + [dataset.get_embed(aroma["SMILES"]) for aroma in aroma_sequence])
   prior_concentration = np.array([0] + [aroma["concentration"] for aroma in aroma_sequence])
 
@@ -59,15 +80,20 @@ def get_top_k(k,aroma_sequence,smiles_crate=[]):
 
   probs = collections.Counter()
 
-  smiles_crate = smiles_crate if smiles_crate else dataset.entire_smiles_crate()
-  for smiles in smiles_crate:
-    if smiles in prior_smiles:
+  seen = set()
+  for (crate,smiles) in get_crates_smiles(crate_fnames):
+    # For molecules that appear across multiple crate_fnames,
+    # their labeled crate is arbitrarily chosen, but the molecule
+    # will only appear once across the results.
+    if smiles in prior_smiles or smiles in seen:
       continue
+
+    seen.add(smiles)
     embed = dataset.get_embed(smiles)
-    probs[smiles] = torch.nn.functional.cosine_similarity(torch.tensor(embed),structure,dim=-1).numpy().item()
+    probs[(crate,smiles)] = torch.nn.functional.cosine_similarity(torch.tensor(embed),structure,dim=-1).numpy().item()
 
   results = []
-  for smiles, p in probs.most_common(k):
-    results.append({"SMILES":smiles,"probability":p,"concentration":dataset.get_concentration(smiles)})
+  for (crate,smiles), p in probs.most_common(k):
+    results.append({"SMILES":smiles, "crate":crate, "probability":p,"concentration":dataset.get_concentration(smiles)})
   
   return results, concentration.numpy().item()
