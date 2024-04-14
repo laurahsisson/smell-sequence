@@ -16,7 +16,7 @@ def rec():
     k = int(request.args.get('k', '3'))
     crates = json.loads(request.args.get('crates', '[]'))
 
-    return recommendation.get(k=k, aroma_sequence=sequence, crates=crates)
+    return recommendation.get(k=k, aroma_sequence=sequence, crate_fnames=crates)
 
 @app.route("/crates/<crate_fname>")
 def get_crate(crate_fname):
