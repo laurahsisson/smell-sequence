@@ -3,17 +3,17 @@ import collections
 Position = collections.namedtuple("Position","x y")
 
 NOTES_WHEEL = ['Citrus', 'Warm', 'Sweet', 'Green', 'Fruity', 'Floral', 'Fresh', 'Spicy', 'Woody']
-Notes = collections.namedtuple("Notes"," ".join(NOTES_WHEEL))
-
+Radar = collections.namedtuple("Radar"," ".join(NOTES_WHEEL))
 
 class RecResult:
-    def __init__(self,names,cas,smiles,concentration,probability,position,notes):
+    def __init__(self,names,cas,smiles,concentration,probability,position,radar,notes):
         self.names = names
         self.cas = cas
         self.smiles = smiles
         self.concentration = concentration
         self.probability = probability
         self.position = position
+        self.radar = radar
         self.notes = notes
 
     def to_dict(self):
@@ -24,5 +24,6 @@ class RecResult:
             'concentration': self.concentration,
             'probability': self.probability,
             'position': self.position._asdict(),
-            'notes': self.notes._asdict()
+            'radar': self.radar._asdict(),
+            'notes': self.notes,
         }

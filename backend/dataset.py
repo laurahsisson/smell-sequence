@@ -3,6 +3,8 @@ import collections
 import tqdm
 import numpy as np
 
+NOTES_COUNT = 3
+
 print("Loading dataset")
 
 # Load molecule database
@@ -43,3 +45,8 @@ def has_data(smiles):
 
 def get_aroma(smiles):
     return aromas[smiles]
+
+def get_notes(smiles):
+    predictions = get_predictions(smiles)
+    notes, freqs = zip(*predictions.most_common(NOTES_COUNT))
+    return list(notes)

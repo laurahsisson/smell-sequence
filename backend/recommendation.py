@@ -18,14 +18,15 @@ def make_aroma(selection):
     position = result_utils.Position(*positions.transform(selection["SMILES"]))
 
     predictions = convert(dataset.get_predictions(selection["SMILES"]))
-    notes = result_utils.Notes(*[predictions[n] for n in result_utils.NOTES_WHEEL])
+    radar = result_utils.Radar(*[predictions[n] for n in result_utils.NOTES_WHEEL])
+    notes = dataset.get_notes(selection["SMILES"])
 
     if selection["crate"]:
         aroma = crate_utils.get_aroma(selection["crate"],selection["SMILES"])
     else:
         aroma = dataset.get_aroma(selection["SMILES"])
     
-    return result_utils.RecResult(aroma["names"],aroma["CAS"],aroma["SMILES"],selection["concentration"],selection["probability"],position,notes)
+    return result_utils.RecResult(aroma["names"],aroma["CAS"],aroma["SMILES"],selection["concentration"],selection["probability"],position,radar,notes)
 
 def get(k,aroma_sequence,crate_fnames,**kwargs):
     """Get the top-k recommendations for a given sequence.

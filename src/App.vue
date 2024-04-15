@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch } from 'vue'
 
+import Radar from '@/components/Radar.vue'
 import Graph from '@/components/Graph.vue'
 import Sequencer from '@/components/Sequencer.vue'
 import Listing from '@/components/Listing.vue'
@@ -64,7 +65,7 @@ function listCrates() {
 }
 
 function getCrate(name) {
-    fetch("http://127.0.0.1:5000/crates/"+name)
+    fetch("http://127.0.0.1:5000/crates/" + name)
         .then(response => response.json())
         .then(response_data => {
             cratesData.value = response_data;
@@ -84,22 +85,22 @@ watch(cratesSelected, async () => {
 watch(sequence, async () => {
     getResults(5);
 }, { deep: true });
-
-
-
 </script>
 <template>
     <div class="surface-ground" style="height: 100%">
         <div class="p-4 mx-auto">
+            <div class="shadow-2 p-3 my-2 surface-card mx-auto" style="border-radius: 6px; max-width: 60em;">
+                <Graph :results="data" @result-appended="appendResult" @set-temp-value="setTempValue" />
+            </div>
             <div class="grid justify-content-center py-2">
                 <div class="col-auto mx-2">
                     <div class="shadow-2 p-3 surface-card" style="border-radius: 6px">
-                        <Sequencer :sequence="sequence" :tempResult="tempResult" @delete-last="deleteLast" />
+                        <Radar :sequence="sequence" :tempResult="tempResult" @delete-last="deleteLast" />
                     </div>
                 </div>
                 <div class="col-auto mx-2">
                     <div class="shadow-2 p-3 surface-card" style="border-radius: 6px">
-                        <Graph :results="data" @result-appended="appendResult" @set-temp-value="setTempValue"  />
+                        <Sequencer :sequence="sequence" />
                     </div>
                 </div>
                 <div class="col-auto mx-2">
@@ -108,7 +109,7 @@ watch(sequence, async () => {
                     </div>
                 </div>
             </div>
-            <div class="shadow-2 p-3 surface-card mx-auto" style="border-radius: 6px; max-width: 100em;">
+            <div class="shadow-2 p-3 my-2 surface-card mx-auto" style="border-radius: 6px; max-width: 100em;">
                 <Crate :cratesList="cratesList" :cratesSelected="cratesSelected" :cratesData="cratesData" :getCrate="getCrate" />
             </div>
         </div>

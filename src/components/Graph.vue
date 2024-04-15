@@ -33,7 +33,7 @@ export default {
 <template>
     <svg :width="graphSize+2*graphPadding" :height="graphSize+2*graphPadding">
         <g v-for="res in results">
-            <circle :cx="res.position.x*graphSize + graphPadding" :cy="res.position.y*graphSize + graphPadding" :r="res.probability*radiusFactor" @click="handleClick(res)" @mouseover="handleMouseover(res)" @mouseout="handleMouseout(res)">
+            <circle :cx="res.position.x*graphSize + graphPadding" :cy="res.position.y*graphSize + graphPadding" :r="res.probability*radiusFactor" @click="handleClick(res)" @mouseover="handleMouseover(res)" @mouseout="handleMouseout(res)" style="cursor: pointer;">
             </circle>
             <text :x="res.position.x*graphSize + graphPadding" :y="res.position.y * graphSize + graphPadding - res.probability * radiusFactor - 10" text-anchor="middle">{{res.names[0]}}</text>
         </g>
