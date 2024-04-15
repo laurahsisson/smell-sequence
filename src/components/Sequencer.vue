@@ -14,11 +14,11 @@ defineEmits(['delete-last']);
     <Button icon="pi pi-arrow-left" severity="secondary" :disabled="sequence.length == 0" @click="$emit('delete-last')"/>
     <DataTable :value="sequence.toReversed()" stripedRows scrollable scrollHeight="200px" :showHeaders="false">
         <Column field="name" header="Name" class="overflow-hidden text-overflow-ellipsis"><template #body="slotProps">
-                {{slotProps.data.names[0]}}
+                {{slotProps.data.names[0]}} ({{slotProps.data.concentration.toFixed(3)}}%)
             </template></Column>
-        <Column field="concentration" header="Concentration">
+        <Column field="dosage" header="Dosage">
             <template #body="slotProps">
-                {{slotProps.data.concentration.toFixed(3)}}%
+                {{slotProps.data.dosage.toFixed(1)}}
             </template>
         </Column>
     </DataTable>

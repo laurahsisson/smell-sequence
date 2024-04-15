@@ -20,6 +20,7 @@ const cratesList = ref([]);
 const cratesData = ref({});
 
 function appendResult(res) {
+    res["dosage"] = dosage.value;
     sequence.value.push(res);
 }
 

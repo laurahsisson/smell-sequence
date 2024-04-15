@@ -40,10 +40,10 @@ const chartOptions = {
 
 function makeChartData() {
     const sequence_notes = props.sequence.map(result => 
-        ({data: all_labels.map(note => result.notes[note])})
+        ({data: all_labels.map(note => result.radar[note])})
     );
-    if (props.tempResult.notes) {
-        sequence_notes.push({data: all_labels.map(note => props.tempResult.notes[note])})
+    if (props.tempResult.radar) {
+        sequence_notes.push({data: all_labels.map(note => props.tempResult.radar[note])})
     }
 
     return {

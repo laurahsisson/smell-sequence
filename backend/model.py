@@ -15,7 +15,7 @@ BATCH_FIRST = True
 
 def make_embed_dict(aroma):
   structure = smiles_embed[aroma["SMILES"]]
-  concentration = aroma["concentration"]/smiles_to_concentration[aroma["SMILES"]]
+  concentration = aroma["dosage"]/smiles_to_concentration[aroma["SMILES"]]
   return {"structure":structure,"concentration":concentration}
 
 

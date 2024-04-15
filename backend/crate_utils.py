@@ -10,6 +10,7 @@ def get(crate_fname):
     crate["data"] = [mol for mol in crate["data"] if dataset.has_data(mol["SMILES"])]
     for mol in crate["data"]:
         mol["notes"] = dataset.get_notes(mol["SMILES"])
+        mol["concentration"] = dataset.get_concentration(mol["SMILES"])
 
     crate["name"] = crate_fname
     return crate

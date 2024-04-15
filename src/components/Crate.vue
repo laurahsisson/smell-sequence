@@ -8,10 +8,9 @@ import TabPanel from 'primevue/tabpanel';
 import Checkbox from 'primevue/checkbox';
 
 const props = defineProps(['cratesList', 'cratesSelected', 'cratesData', 'getCrate'])
-
 </script>
 <template>
-    <TabView @update:activeIndex="(activeIndex)=>getCrate(cratesList[activeIndex].name)" >
+    <TabView @update:activeIndex="(activeIndex)=>getCrate(cratesList[activeIndex].name)">
         <TabPanel v-for="crate in cratesList">
             <template #header>
                 <Checkbox v-model="cratesSelected[crate.name]" :binary="true" />
@@ -21,8 +20,11 @@ const props = defineProps(['cratesList', 'cratesSelected', 'cratesData', 'getCra
                 {{crate.description}}
             </p>
             <!-- getCrate() -->
-           <DataTable :value="cratesData.data" showGridlines stripedRows scrollable scrollHeight="400px">
-                <Column field="name" header="Name"></Column>
+            <DataTable :value="cratesData.data" showGridlines stripedRows scrollable scrollHeight="400px">
+                <Column field="name" header="Name" class="overflow-hidden text-overflow-ellipsis"><template #body="slotProps">
+                        {{slotProps.data.name}} ({{slotProps.data.concentration.toFixed(3)}}%)
+                    </template>
+                </Column>
                 <Column field="CAS" header="CAS"></Column>
                 <Column field="notes" header="Notes">
                     <template #body="slotProps">
