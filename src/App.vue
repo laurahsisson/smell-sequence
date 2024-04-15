@@ -96,12 +96,12 @@ watch(sequence, async () => {
             <div class="grid justify-content-center py-2">
                 <div class="col-auto mx-2">
                     <div class="shadow-2 p-3 surface-card" style="border-radius: 6px">
-                        <Radar :sequence="sequence" :tempResult="tempResult" @delete-last="deleteLast" />
+                        <Radar :sequence="sequence" :tempResult="tempResult"/>
                     </div>
                 </div>
                 <div class="col-auto mx-2">
                     <div class="shadow-2 p-3 surface-card" style="border-radius: 6px">
-                        <Sequencer :sequence="sequence" />
+                        <Sequencer :sequence="sequence" @delete-last="deleteLast"/>
                     </div>
                 </div>
                 <div class="col-auto mx-2">
