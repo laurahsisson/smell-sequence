@@ -13,10 +13,10 @@ CORS(app)
 def rec():
     sequence = json.loads(request.args.get('sequence', '[]'))
 
-    k = int(request.args.get('k', '3'))
     crates = json.loads(request.args.get('crates', '[]'))
+    options = json.loads(request.args.get('options', '{}'))
 
-    return recommendation.get(k=k, aroma_sequence=sequence, crate_fnames=crates)
+    return recommendation.get(aroma_sequence=sequence, crate_fnames=crates, options=options)
 
 @app.route("/crates/<crate_fname>")
 def get_crate(crate_fname):

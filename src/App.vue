@@ -7,9 +7,12 @@ import Sequencer from '@/components/Sequencer.vue'
 import Listing from '@/components/Listing.vue'
 import Crate from '@/components/Crate.vue'
 
+
 const data = ref([]);
 
 const sequence = ref([])
+
+const options = ref({k:15,global_tsne:false})
 
 const dosage = ref(0);
 
@@ -32,13 +35,14 @@ function setTempValue(res) {
     tempResult.value = res;
 }
 
-function getResults(k) {
+function getResults() {
     const sequence_str = JSON.stringify(sequence.value);
 
     const crates = Object.keys(cratesSelected.value).filter(key => cratesSelected.value[key]);
     const crates_str = JSON.stringify(crates);
+    const options_str = JSON.stringify(options.value);
 
-    fetch("http://127.0.0.1:5000/recommendation/?sequence=" + encodeURIComponent(sequence_str) + "&k=" + k + "&crates=" + encodeURIComponent(crates_str))
+    fetch("http://127.0.0.1:5000/recommendation/?sequence=" + encodeURIComponent(sequence_str) + "&crates=" + encodeURIComponent(crates_str) + "&options=" + encodeURIComponent(options_str))
         .then(response => response.json())
         .then(response_data => {
             // Process the JSON response data
@@ -80,18 +84,23 @@ function getCrate(name) {
 listCrates();
 
 watch(cratesSelected, async () => {
-    getResults(5);
+    getResults();
 }, { deep: true });
 
 watch(sequence, async () => {
-    getResults(5);
+    getResults();
 }, { deep: true });
+
+watch(options, async () => {
+    getResults();
+}, { deep: true });
+
 </script>
 <template>
     <div class="surface-ground" style="height: 100%">
         <div class="p-4 mx-auto">
             <div class="shadow-2 p-3 my-2 surface-card mx-auto" style="border-radius: 6px; max-width: 60em;">
-                <Graph :results="data" @result-appended="appendResult" @set-temp-value="setTempValue" />
+                <Graph :results="data" :options="options" @result-appended="appendResult" @set-temp-value="setTempValue" />
             </div>
             <div class="grid justify-content-center py-2">
                 <div class="col-auto mx-2">
