@@ -160,5 +160,5 @@ cython_debug/
 #.idea/
 
 # Data too large
-backend/datasets/*
-backend/models/*
+# backend/datasets/*
+# backend/models/*
