@@ -1,3 +1,4 @@
+<!-- npm run dev -->
 <script setup>
 import { ref, watch } from 'vue'
 
@@ -8,11 +9,16 @@ import Listing from '@/components/Listing.vue'
 import Crate from '@/components/Crate.vue'
 
 
+const units = ref([
+    { name: 'Milliliter', symbol: 'mL' },
+    { name: 'Miligram', symbol: 'mg' },
+]);
+
 const data = ref([]);
 
 const sequence = ref([])
 
-const options = ref({k:15,global_tsne:false})
+const options = ref({k:15,global_tsne:false,unit:units.value[0]})
 
 const dosage = ref(0);
 
@@ -29,6 +35,10 @@ function appendResult(res) {
 
 function deleteLast() {
     sequence.value.pop();
+}
+
+function deleteAll() {
+    sequence.value = [];
 }
 
 function setTempValue(res) {
@@ -100,7 +110,7 @@ watch(options, async () => {
     <div class="surface-ground" style="height: 100%">
         <div class="p-4 mx-auto">
             <div class="shadow-2 p-3 my-2 surface-card mx-auto" style="border-radius: 6px; max-width: 60em;">
-                <Graph :results="data" :options="options" @result-appended="appendResult" @set-temp-value="setTempValue" />
+                <Graph :units="units" :results="data" :options="options" @result-appended="appendResult" @set-temp-value="setTempValue" />
             </div>
             <div class="grid justify-content-center py-2">
                 <div class="col-auto mx-2">
@@ -110,12 +120,12 @@ watch(options, async () => {
                 </div>
                 <div class="col-auto mx-2">
                     <div class="shadow-2 p-3 surface-card" style="border-radius: 6px">
-                        <Sequencer :sequence="sequence" @delete-last="deleteLast"/>
+                        <Sequencer :options="options" :sequence="sequence" @delete-last="deleteLast"  @delete-all="deleteAll"/>
                     </div>
                 </div>
                 <div class="col-auto mx-2">
                     <div class="shadow-2 p-3 surface-card" style="border-radius: 6px">
-                        <Listing :results="data" :dosage="dosage" />
+                        <Listing @result-appended="appendResult" :options="options" :results="data" :dosage="dosage" />
                     </div>
                 </div>
             </div>

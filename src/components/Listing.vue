@@ -1,19 +1,22 @@
 <script setup>
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
+import Button from 'primevue/button';
 
-const props = defineProps(['results', 'dosage'])
+const props = defineProps(['options','results', 'dosage'])
+defineEmits(['result-appended']);
 
 // ({{res.concentration.toFixed(3)}}%)
 
 </script>
 <template>
     <div class="text-center text-2xl">
-        Options w/ Dosage of {{dosage.toFixed(1)}}
+        Options w/ Dosage of {{dosage.toFixed(1)}}  {{options.unit.symbol}}
     </div>
     <DataTable :value="results" stripedRows scrollable scrollHeight="200px" :showHeaders="false">
         <Column field="name" header="Name" class="overflow-hidden text-overflow-ellipsis"><template #body="slotProps">
-            {{slotProps.data.names[0]}} ({{slotProps.data.concentration.toFixed(3)}}%)
+            <Button icon="pi pi-plus" severity="success" text rounded @click="this.$emit('result-appended', slotProps.data);"/>
+            {{slotProps.data.names[0]}} ({{slotProps.data.concentration.toLocaleString(undefined,{style: 'percent', minimumFractionDigits:2})}})
             </template>
         </Column>
         <Column field="probability" header="probability">
