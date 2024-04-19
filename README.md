@@ -9,4 +9,4 @@ The demo isn't on the web yet, so you'll have to run locally:
 * 
 Currently, the frontend is hardcoded to send requests to `http://127.0.0.1:5000`. This is in `frontend/src/App.vue`
 
-Please don't use this to automate away perfumery jobs <3
+Please don't use this to automate perfumery jobs <3
